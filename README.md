@@ -1,31 +1,40 @@
-# WES Alignment Pipeline - GitHub Repository
+# DNA-seq Alignment Pipeline - GitHub Repository
 ![WES_PIPELINE](docs/WES%20Pipeline.png)
 
-This repository contains a bioinformatics pipeline for aligning whole exome sequencing (WES) samples to the hg38 reference genome. The pipeline automates sample preparation, alignment, deduplication, and base quality recalibration using industry-standard tools.
+### Introduction 
+This repository contains a bioinformatics pipeline for aligning DNA-based sequencing samples to the hg38 reference genome. The pipeline implements a lego-like design (`compiled.sh`) that enables flexible combination of processing stages:
+- Data preparation
+- Raw sequence alignment and deduplication
+- Somatic mutation discovery
+- Copy number variation calling
+
+The pipeline has been validated for:
+1. Whole exome sequencing
+2. Targeted sequencing
+3. Shallow whole genome sequencing 
 
 ### Pipeline Workflow
-1. **Sample Preparation (`prepare.sh`)**  
-   - Creates sample-specific directories  
-   - Organizes FASTQ files  
-   - Merges fragmented reads  
-   - Standardizes filenames  
+The pipeline follows a sample-centric organization structure where each sample resides in its own directory. Within each sample directory, processing begins with forward and reverse FASTQ files and, at minimum, produces aligned, deduplicated, base-quality-calibrated BAM files.
 
-2. **Alignment (`alignment.sh`)**  
-   - **BWA-MEM**: Aligns FASTQ → SAM  
-   - **Picard Tools**:  
-     - Sorts SAM files  
-     - Adds read groups  
-     - Marks/removes duplicates (output: BAM)  
-   - **GATK**:  
-     - Base Quality Score Recalibration (BQSR)  
-     - Outputs refined BAM files  
+1. Sample Preparation (`prepare.sh`): Organizes samples when directories are not pre-established:
+   - Creates sample-named directories
+   - Moves FASTQ files to corresponding directories
+   - Converts `.fastq.gz` to `.fq.gz` format
+   - Merges fragmented reads alphabetically
+   - Standardizes filenames to `[sample]_1.fq.gz` and `[sample]_2.fq.gz`
 
-3. **Execution (`compiled.sh`)**  
-   - PBS job scheduler script  
-   - Processes multiple samples sequentially  
-   - Manages dependencies and resources  
+2. Alignemnt (`alignment.sh`): Processes prepared samples:
+   - Aligns reads to hg38 using BWA-MEM (12-thread parallel)
+   - Sorts SAM files via Picard
+   - Adds read groups (supports Illumina and BGI formats)
+   - Marks and removes duplicates
+   - Performs base quality recalibration with GATK
+   - Maintains both calibrated and uncalibrated BAM files
+   - Cleans interim SAM files automatically
 
-#### Dependencies
+
+### Key Package Dependencies
+For this code, the following packages and dependencies were used. 
 | Tool          | Version       | Purpose                     |
 |---------------|---------------|-----------------------------|
 | BWA           | 0.7.17        | Sequence alignment          |
@@ -34,41 +43,35 @@ This repository contains a bioinformatics pipeline for aligning whole exome sequ
 | Miniconda3    | 24.1.2        | Environment management      |
 
 
-#### Reference Files Required
-Please find it in this shared google drive
+### Reference Files Required
+Please find it in this shared google drive 
 - `Homo_sapiens.GRCh38.dna.primary_assembly.fa` (hg38)
 - Known variant databases:
   - `Homo_sapiens_assembly38.known_indels.vcf.gz`
   - `Mills.indels.contig.adjusted.hg38.vcf.gz`
   - `Homo_sapiens_assembly38.dbsnp138.vcf.gz`
 
-#### Usage
+### Usage Guide 
+Configure only `compiled.sh`:
 1. Configure paths in `compiled.sh`:
    ```bash
    HOME="/your/project/directory"
    REF="/path/to/reference/files"
    ```
 2. Specify Platform and Library used for Alignment
-3. Add sample IDs to `samples.txt`
-4. Submit to PBS scheduler:
-   ```bash
-   qsub compiled.sh
-   ```
+3. Make a list of sample ids in `samples.txt`
+Once everything is configured, submit to PBS scheduler: `qsub compiled.sh`
 
-#### Output Structure
+### Expected Output Structure
 Per sample directory contains:
 ```
 [sample_id]/
 ├── [sample_id]_1.fq.gz            # Processed forward reads
 ├── [sample_id]_2.fq.gz            # Processed reverse reads
+├── [sample_id].sort.tag.dedup.bam  # uncalibrated BAM
+├── [sample_id].sort.tag.dedup.bam.bai  # uncalibrated BAM's index
 ├── [sample_id].sort.tag.dedup.cal.bam  # Final recalibrated BAM
+├── [sample_id].sort.tag.dedup.cal.bam.bai  # Final recalibrated BAM's index
 ├── [sample_id].recalibration_table.txt # BQSR metrics
 └── [sample_id].notes.txt          # Full processing log
 ```
-
-1. Validate reference file paths before execution
-2. Monitor PBS logs for resource usage
-3. Verify read group information in `.notes.txt`
-4. Store raw FASTQ files outside pipeline directory
-
-This pipeline implements GATK best practices for WES data processing and is optimized for reproducibility in cluster environments.
