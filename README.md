@@ -74,7 +74,7 @@ Configure only `compiled.sh`:
 3. Make a list of sample ids in `samples.txt`
 Once everything is configured, submit to PBS scheduler: `qsub compiled.sh`
 
-### Expected Output Structure
+### Minimum Expected Output Structure
 Per sample directory contains:
 ```
 [sample_id]/
