@@ -6,12 +6,12 @@ This repository contains a bioinformatics pipeline for aligning DNA-based sequen
 - Data preparation (Optional; in current repository)
 - Raw sequence alignment and deduplication (Essential; in current repository)
 - Somatic mutation discovery (Optional)
-- Copy number variation calling (Optional; two versions: for sWGS, for WES/WGS/TS)
+- Copy number variation calling (Optional; two versions: for sWGS (`QDNAseq.R`), for WES/WGS/TS)
 
 The pipeline has been validated for:
 1. Whole Exome Sequencing (`compiled.sh`, `prepare.sh`, `alignment.sh`)
 2. Targeted sequencing (`compiled.sh`, `prepare.sh`, `alignment.sh`, `copy_number.sh`)
-3. Shallow whole genome sequencing (`compiled.sh`, `alignment.sh`) 
+3. Shallow whole genome sequencing (`compiled.sh`, `alignment.sh`, `QDNAseq.R`) 
 4. Whole Genome Sequencing (`alignment.sh`) [https://doi.org/10.1007/s00259-025-07118-0]
 
 ### Pipeline Workflow
@@ -33,6 +33,17 @@ The pipeline follows a sample-centric organization structure where each sample r
    - Maintains both calibrated and uncalibrated BAM files
    - Cleans interim SAM files automatically
 
+3. Copy Number Calling (`facets.sh`, `facets.R`): Call segmentation profile from WES, WGS, and TS.
+   - Run SNP-pipeup with tumour.bam and paired normal.bam or pooled_normal.bam
+   - Run FACETS R package on output snp-pipeup data.
+
+4. Copy Number Calling (`QDNAseq.R`): Call Copy Number from shallow whole genome sequencing using [QDNAseq](https://github.com/ccagc/QDNAseq.git) package
+   - Define folder analysis: folder/scripts/QDNAseq.R; folder/data/BAM; folder/data/QDNAseq; folder/sample_id.txt, folder/reference_cn_unnormalised.txt
+   - Define bins (500) and load BAM file
+   - Generate raw copy number and perform quality control
+   - Normalisation and Segmentation: correct GC bias, smooth bins, and call segmentation
+   - Reference Calibration: Adjusts CN using unnormalized reference `reference_cn_unnormalised.txt`, re-segments and re-calls calibrated data
+   - Output TXT, IGV, BED, VCF, SEG and save image.
 
 ### Key Package Dependencies
 For this code, the following packages and dependencies were used. 
