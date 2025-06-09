@@ -3,10 +3,10 @@
 
 ### Introduction 
 This repository contains a bioinformatics pipeline for aligning DNA-based sequencing samples to the hg38 reference genome. The pipeline implements a lego-like design (`compiled.sh`) that enables flexible combination of processing stages:
-- Data preparation
-- Raw sequence alignment and deduplication
-- Somatic mutation discovery
-- Copy number variation calling
+- Data preparation (Optional; in current repository)
+- Raw sequence alignment and deduplication (Essential; in current repository)
+- Somatic mutation discovery (Optional)
+- Copy number variation calling (Optional; two versions: for sWGS, for WES/WGS/TS)
 
 The pipeline has been validated for:
 1. Whole Exome Sequencing (`compiled.sh`, `prepare.sh`, `alignment.sh`)
