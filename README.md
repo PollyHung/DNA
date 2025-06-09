@@ -11,8 +11,8 @@ This repository contains a bioinformatics pipeline for aligning DNA-based sequen
 The pipeline has been validated for:
 1. Whole Exome Sequencing (`compiled.sh`, `prepare.sh`, `alignment.sh`)
 2. Targeted sequencing (`compiled.sh`, `prepare.sh`, `alignment.sh`, `copy_number.sh`)
-3. Shallow whole genome sequencing (`compiled.sh`, `alignment.sh`)
-4. Whole Genome Sequencing (`alignment.sh`)
+3. Shallow whole genome sequencing (`compiled.sh`, `alignment.sh`) 
+4. Whole Genome Sequencing (`alignment.sh`) [https://doi.org/10.1007/s00259-025-07118-0]
 
 ### Pipeline Workflow
 The pipeline follows a sample-centric organization structure where each sample resides in its own directory. Within each sample directory, processing begins with forward and reverse FASTQ files and, at minimum, produces aligned, deduplicated, base-quality-calibrated BAM files.
