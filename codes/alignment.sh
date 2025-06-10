@@ -54,6 +54,7 @@ else
   echo "Platform Unit: $RGPU; Group: $RGID" >> "$folder/$sample_id.notes.txt"
 fi
 
+
 ## Add read groups to the sorted sam
 echo "Add read group to SAM at $(date)" >> "$folder/$sample_id.notes.txt"
 java -jar /software/Picard/3.2.0/picard.jar AddOrReplaceReadGroups \

@@ -8,8 +8,11 @@
 ## Set Working Directory 
 HOME="/home/polly_hung/WES/F25A430000757_HOMukwhX"
 SAMPLES="$HOME/samples.txt" 
-RGLB="Whole Exome library"
-RGPL="DNBSEQ"
+
+## Hard Coded Parameters 
+RGLB="Whole Exome library"                                                      ## [alignment.sh]
+RGPL="DNBSEQ"                                                                   ## [alignment.sh]
+PARAM="-g -q15 -Q20 -P100 -r25,0"                                               ## [facets.sh]
 
 # References  
 REF="/home/polly_hung/reference"
@@ -17,6 +20,7 @@ HG38="$REF/hg38/Homo_sapiens.GRCh38.dna.primary_assembly.fa"
 KNOWN_INDELS="$REF/vcf/Homo_sapiens_assembly38.known_indels.vcf.gz"
 MILL_INDELS="$REF/vcf/Mills.indels.contig.adjusted.hg38.vcf.gz"
 DBSNP="$REF/vcf/Homo_sapiens_assembly38.dbsnp138.vcf.gz"
+SORTED_VCF="$REF/vcf/sorted_vcf_file.vcf.gz"
 
 ## Sub-scripts 
 prepare="/home/polly_hung/WES/codes/prepare.sh"
@@ -37,6 +41,9 @@ while IFS= read -r sample_id; do
     ## was used to introduce base-score recalibration to the BAM file. Both un-calibrated
     ## and calibrated BAM files were preserved. All records are stored in notes.txt
     source "$alignment"
+    
+    ## Copy Number Version 1 (FACETS/ASCAT): Download FACETS from "https://github.com/mskcc/facets.git"
+    
     
 done < "$SAMPLES" 
 
