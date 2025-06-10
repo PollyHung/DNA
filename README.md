@@ -87,3 +87,37 @@ Per sample directory contains:
 ├── [sample_id].recalibration_table.txt # BQSR metrics
 └── [sample_id].notes.txt          # Full processing log
 ```
+
+### Installation Details 
+#### Installing FACETS SNP-pileup
+```
+module load git 
+git clone https://github.com/mskcc/facets.git
+```
+1. Find the HTSlib location, if using miniconda3 on HPC, type module show HTSlib/1.20         
+```
+      whatis("Name: HTSlib")
+      whatis("Install Date: 2024-08-07")
+      whatis("Installed by: Philip")
+      prepend_path("PATH","/software/HTSlib/1.20/bin")
+      prepend_path("LD_LIBRARY_PATH","/software/HTSlib/1.20/lib")
+      prepend_path("MANPATH","/software/HTSlib/1.20/share/bin")
+      prepend_path("PKG_CONFIG_PATH","/software/HTSlib/1.20/lib/pkgconfig")
+```
+2. You need: `/software/HTSlib/1.20/include` and `/software/HTSlib/1.20/lib`      
+3. Compilation happened in side the facet package, specifically in /home/polly_hung/facets/inst/extcode      
+4. Compilation code: `g++ -std=c++11 -I/software/HTSlib/1.20/include snp-pileup.cpp -L/software/HTSlib/1.20/lib -lhts -Wl,-rpath=/software/HTSlib/1.20/lib -o snp-pileup`      
+
+Installation of the R package is just by 
+`remotes::install_github("mskcc/pctGCdata")` or `remotes::install_github("veseshan/pctGCdata")` followed by 
+`remotes::install_github("mskcc/facets", build_vignettes = TRUE)`
+
+
+
+
+
+
+
+
+
+
