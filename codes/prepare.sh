@@ -46,7 +46,7 @@ if [ ${#r1_files[@]} -gt 1 ] ; then
   cat *_1.fq.gz > "${sample_id}_1.fq.gz" ## Merging
 else
   echo "Single forward strand detected. Renaming to standard format..." >> "$folder/$sample_id.notes.txt"
-  mv -- "${r1_files[0]}" "${sample_id}_1.fq.gz" ## Renaming 
+  mv "${r1_files[0]}" "${sample_id}_1.fq.gz" ## Renaming 
 fi
 ## For Backward Strand 
 if [ ${#r2_files[@]} -gt 1 ]; then
@@ -55,7 +55,7 @@ if [ ${#r2_files[@]} -gt 1 ]; then
   cat *_2.fq.gz > "${sample_id}_2.fq.gz"
 else
   echo "Single backward strand detected. Renaming to standard format..." >> "$folder/$sample_id.notes.txt"
-  mv -- "${r2_files[0]}" "${sample_id}_2.fq.gz"
+  mv "${r2_files[0]}" "${sample_id}_2.fq.gz"
 fi
 
 # ## Note to Self: 
