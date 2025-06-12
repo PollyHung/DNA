@@ -12,7 +12,7 @@ source activate /software/GenomeAnalysisTK/4.2.0.0
 gatk Mutect2 \
   -R "$HG38" \
   -I "${sample_id}.sort.tag.dedup.cal.bam" \
-  -I "$MUTECT2_NORMAL" \
+  -I "$PAIRED_NORMAL" \
   -germline-resource "$GNOMAD" \
   -O "${sample_id}.vcf.gz"
   

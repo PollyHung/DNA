@@ -4,17 +4,17 @@
 #PBS -l walltime=24:00:00
 #PBS -m a
 #PBS -q medium
-#PBS -N KUROMOCHI
+#PBS -N OAW28
 
 ## Set Working Directory 
 HOME="/home/polly_hung/WES/F25A430000757_HOMukwhX"
-SAMPLES="$HOME/mutect_kuro.txt" 
+SAMPLES="$HOME/mutect_oaw28.txt" 
 
 ## Hard Coded Parameters 
 RGLB="Whole Exome library"                                                      ## [alignment.sh]
 RGPL="DNBSEQ"                                                                   ## [alignment.sh]
 PARAM="-g -q15 -Q20 -P100 -r25,0"                                               ## [facets.sh]
-MUTECT2_NORMAL="/home/polly_hung/WES/F25A430000757_HOMukwhX/Kura_C_DNA/Kura_C_DNA.sort.tag.dedup.cal.bam"
+PAIRED_NORMAL="/home/polly_hung/WES/F25A430000757_HOMukwhX/OAW28_C_DNA/OAW28_C_DNA.sort.tag.dedup.cal.bam"
 
 # References  
 REF="/home/polly_hung/reference"
@@ -30,6 +30,9 @@ INTERVAL="$REF/interval/hg38_wes_gatk_stripped.interval_list"
 prepare="/home/polly_hung/WES/codes/prepare.sh"
 alignment="/home/polly_hung/WES/codes/alignment.sh"
 mutect2="/home/polly_hung/WES/codes/mutation.sh"
+funcotate="/home/polly_hung/WES/codes/funcotate.sh"
+facets="/home/polly_hung/WES/codes/facets.sh"
+facetsR="/home/polly_hung/WES/codes/facets.R"
 
 ## Are samples in their corresponding directory? 
 while IFS= read -r sample_id; do
