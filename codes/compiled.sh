@@ -25,14 +25,17 @@ DBSNP="$REF/vcf/Homo_sapiens_assembly38.dbsnp138.vcf.gz"
 SORTED_VCF="$REF/vcf/sorted_vcf_file.vcf.gz"
 GNOMAD="$REF/vcf/af-only-gnomad.hg38.vcf.gz"
 INTERVAL="$REF/interval/hg38_wes_gatk_stripped.interval_list"
+PON="$REF/vcf/somatic-hg38_1000g_pon.hg38.vcf.gz"
+DATA_SOURCE="$REF/mutation"
+
+
 
 ## Sub-scripts 
-prepare="/home/polly_hung/WES/codes/prepare.sh"
-alignment="/home/polly_hung/WES/codes/alignment.sh"
-mutect2="/home/polly_hung/WES/codes/mutation.sh"
-funcotate="/home/polly_hung/WES/codes/funcotate.sh"
-facets="/home/polly_hung/WES/codes/facets.sh"
-facetsR="/home/polly_hung/WES/codes/facets.R"
+CODE="/home/polly_hung/WES/codes"
+prepare="$CODE/prepare.sh"
+alignment="$CODE/alignment.sh"
+mutation="$CODE/mutation.sh"
+facets="$CODE/facets.sh"
 
 ## Are samples in their corresponding directory? 
 while IFS= read -r sample_id; do
@@ -49,10 +52,17 @@ while IFS= read -r sample_id; do
     ## and calibrated BAM files were preserved. All records are stored in notes.txt
     source "$alignment"
     
-    ## Copy Number Version 1 (FACETS/ASCAT): Download FACETS from "https://github.com/mskcc/facets.git"
+    ## Copy Number Estimation by FACETS on WES/WGS/Targeted Sequencing, a two-step process
+    ## first by SNP-pileup given a tumour and a normal bam file (preferablly matched), followed
+    ## by copy number calling using FACETS R package 
+    source "$facets"
     
-    ## Mutation
-    source "$mutect2"
+    ## Somatic Mutation Analysis by Mutect2 in combination with annotation tools like Annovar
+    ## and funcotator. Somatic mutation called with paired normal sample, panel of normal 
+    ## downloaded from GATK gs://gatk-best-practices/somatic-hg38/1000g_pon.hg38.vcf.gz, 
+    ## unless specified otherwise in mutation.sh. 
+    source "$mutation"
+
     
 done < "$SAMPLES" 
 

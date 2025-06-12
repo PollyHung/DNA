@@ -13,6 +13,7 @@ gatk Mutect2 \
   -R "$HG38" \
   -I "${sample_id}.sort.tag.dedup.cal.bam" \
   -I "$PAIRED_NORMAL" \
+  --panel-of-normals "$PON" \
   -germline-resource "$GNOMAD" \
   -O "${sample_id}.vcf.gz"
   
@@ -36,5 +37,20 @@ gatk FilterMutectCalls \
   -V "${sample_id}.vcf.gz" \
   --contamination-table "${sample_id}.contam.txt" \
   --tumor-segmentation "${sample_id}.segment.txt"
-  
+
+# Download funcotator database when unfound 
+gatk FuncotatorDataSourceDownloader \
+  --somatic \
+  --validate-integrity \
+  --extract-after-download \
+  --output "$DATA_SOURCE" \
+  --gcs-project-for-requester-pays "clear-heaven-462706-n2"
+   
+
+
+
+
+
+
+
 
