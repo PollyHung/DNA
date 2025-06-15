@@ -112,6 +112,21 @@ Installation of the R package is just by
 `remotes::install_github("mskcc/pctGCdata")` or `remotes::install_github("veseshan/pctGCdata")` followed by 
 `remotes::install_github("mskcc/facets", build_vignettes = TRUE)`
 
+#### Installing TMB       
+First clone the repository to your directory       
+```
+module load git
+git clone https://github.com/bioinfo-pf-curie/TMB.git
+cd TMB
+```
+Uses conda to create a new environment to install tmb.         
+```
+module load miniconda3
+conda env create -n pytmb
+conda init
+conda activate pytmb
+conda install -c bioconda -c conda-forge tmb=1.3.0
+```
 
 
 
