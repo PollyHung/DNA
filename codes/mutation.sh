@@ -38,16 +38,9 @@ gatk FilterMutectCalls \
   --contamination-table "${sample_id}.contam.txt" \
   --tumor-segmentation "${sample_id}.segment.txt"
 
-# Download funcotator database when unfound 
-gatk FuncotatorDataSourceDownloader \
-  --somatic \
-  --validate-integrity \
-  --extract-after-download \
-  --output "$DATA_SOURCE" \
-  --gcs-project-for-requester-pays "clear-heaven-462706-n2"
-   
-
-
+  
+# GUNZIP THE OUTPUT 
+gunzip "${sample_id}.filt.vcf.gz"
 
 
 
