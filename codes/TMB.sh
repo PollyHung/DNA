@@ -5,15 +5,12 @@ cd $folder
 
 ## Command 
 TMB="/home/polly_hung/TMB/bin/pyTMB.py"
-EffGenomeSize="/home/polly_hung/TMB/bin/pyEffGenomeSize.py"
-
 
 ## Load all Modules needed
 module load miniconda3
 source ~/.bashrc
 conda activate pytmb
 module load bcftools
-
 
 ## Normalise the vcf 
 python "$TMB" -i "${sample_id}.filt.vcf" --effGenomeSize 33280000 \

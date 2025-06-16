@@ -7,6 +7,7 @@ cd $folder
 module load miniconda3
 module load GenomeAnalysisTK/4.2.0.0
 source activate /software/GenomeAnalysisTK/4.2.0.0
+module load ANNOVAR/2020Jun08
 
 # get unfiltered vcf 
 gatk Mutect2 \
@@ -38,12 +39,21 @@ gatk FilterMutectCalls \
   --contamination-table "${sample_id}.contam.txt" \
   --tumor-segmentation "${sample_id}.segment.txt"
 
-  
-# GUNZIP THE OUTPUT 
+# gunzip the output 
 gunzip "${sample_id}.filt.vcf.gz"
+chmod +x "${sample_id}.filt.vcf"
 
-
-
-
-
+# run annovar on the gunzipped output 
+table_annovar.pl "${sample_id}.filt.vcf" \
+    "$ANNOVARDB" \
+    -buildver hg38 \
+    -out "${sample_id}.tmb_anno" \
+    -remove \
+    -protocol refGeneWithVer,cytoBand,gnomad211_exome,clinvar_20240611,avsnp151,dbnsfp47a \
+    -operation g,r,f,f,f,f \
+    -nastring . \
+    -vcfinput \
+    -polish \
+    -arg '-hgvs',,,,, \
+    -thread 12
 

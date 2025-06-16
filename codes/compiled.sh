@@ -26,6 +26,7 @@ SORTED_VCF="$REF/vcf/sorted_vcf_file.vcf.gz"
 GNOMAD="$REF/vcf/af-only-gnomad.hg38.vcf.gz"
 INTERVAL="$REF/interval/hg38_wes_gatk_stripped.interval_list"
 PON="$REF/vcf/somatic-hg38_1000g_pon.hg38.vcf.gz"
+ANNOVARDB="$REF/humandb/"
 
 ## Sub-scripts 
 CODE="/home/polly_hung/WES/codes"
