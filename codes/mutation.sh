@@ -69,6 +69,7 @@ conda activate pytmb
 module load bcftools
 cd $folder # then go to the individual sample folder again ---------------------------------
 
+
 # TMB command 
 TMB="/home/polly_hung/TMB/bin/pyTMB.py"
 
