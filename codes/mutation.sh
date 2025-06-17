@@ -61,16 +61,13 @@ table_annovar.pl "${sample_id}.filt.vcf" \
 module unload GenomeAnalysisTK/4.2.0.0
 source deactivate /software/GenomeAnalysisTK/4.2.0.0
 
-# go to the home directory to activate pytmb
-cd "$ORIG"
+
+cd "$ORIG" # go to the home directory to activate pytmb ------------------------------------
 module load miniconda3
 source ~/.bashrc
 conda activate pytmb
 module load bcftools
-
-# then go to the individual sample folder again 
-folder="$HOME/$sample_id"
-cd $folder 
+cd $folder # then go to the individual sample folder again ---------------------------------
 
 # TMB command 
 TMB="/home/polly_hung/TMB/bin/pyTMB.py"
