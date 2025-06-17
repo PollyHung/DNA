@@ -19,14 +19,3 @@ eval "$cmd"
 ## Gunzip the output 
 gunzip "$output"
 
-# ## Load R 
-# module load miniconda3/24.1.2
-# conda activate my_r_env
-# 
-# R -e "install.packages(c('dplyr', 'ggplot2', 'magrittr'), repos='http://cran.rstudio.com/')"
-# 
-# 
-# Rscript "$CODE/facets.R" "$sample_id"
-
-
-

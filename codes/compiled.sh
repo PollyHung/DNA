@@ -7,6 +7,7 @@
 #PBS -N OAW28
 
 ## Set Working Directory 
+ORIG="/home/polly_hung"
 HOME="/home/polly_hung/WES/F25A430000757_HOMukwhX"
 SAMPLES="$HOME/mutect_oaw28.txt" 
 
@@ -27,6 +28,7 @@ GNOMAD="$REF/vcf/af-only-gnomad.hg38.vcf.gz"
 INTERVAL="$REF/interval/hg38_wes_gatk_stripped.interval_list"
 PON="$REF/vcf/somatic-hg38_1000g_pon.hg38.vcf.gz"
 ANNOVARDB="$REF/humandb/"
+CONFIG="$REF/TMB/config"
 
 ## Sub-scripts 
 CODE="/home/polly_hung/WES/codes"

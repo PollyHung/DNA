@@ -57,3 +57,41 @@ table_annovar.pl "${sample_id}.filt.vcf" \
     -arg '-hgvs',,,,, \
     -thread 12
 
+# deactivate GATK
+module unload GenomeAnalysisTK/4.2.0.0
+source deactivate /software/GenomeAnalysisTK/4.2.0.0
+
+# go to the home directory to activate pytmb
+cd "$ORIG"
+module load miniconda3
+source ~/.bashrc
+conda activate pytmb
+module load bcftools
+
+# then go to the individual sample folder again 
+folder="$HOME/$sample_id"
+cd $folder 
+
+# TMB command 
+TMB="/home/polly_hung/TMB/bin/pyTMB.py"
+
+# run tmb calling
+python "$TMB" -i "${sample_id}.filt.vcf" --effGenomeSize 33280000 \
+  --sample "$sample_id" \
+  --dbConfig "$CONFIG/annovar.yml" \
+  --varConfig "$CONFIG/mutect2.yml" \
+  --vaf 0.05 --maf 0.001 --minDepth 20 --minAltDepth 2 \
+  --filterLowQual \
+  --filterNonCoding \
+  --filterSyn \
+  --filterPolym --polymDb 1k,gnomad  > "${sample_id}.TMB_results.log"
+
+
+
+
+
+
+
+
+
+
