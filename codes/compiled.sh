@@ -15,7 +15,7 @@ SAMPLES="$HOME/mutect_oaw28.txt"
 RGLB="Whole Exome library"                                                      ## [alignment.sh]
 RGPL="DNBSEQ"                                                                   ## [alignment.sh]
 PARAM="-g -q15 -Q20 -P100 -r25,0"                                               ## [facets.sh]
-PAIRED_NORMAL="/home/polly_hung/WES/F25A430000757_HOMukwhX/OAW28_C_DNA/OAW28_C_DNA.sort.tag.dedup.cal.bam"
+PAIRED_NORMAL="/home/polly_hung/WES/F25A430000757_HOMukwhX/Kura_C_DNA/Kura_C_DNA.sort.tag.dedup.cal.bam"
 
 # References  
 REF="/home/polly_hung/reference"
