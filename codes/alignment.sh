@@ -1,6 +1,6 @@
 ## If prepare.sh is executed, then previous directory is inherited here. 
 ## But in case you skipped prepare.sh, we'll set directory here again, just in case :D
-folder="$HOME/$sample_id"
+folder="$DATA/$sample_id"
 cd $folder 
 
 

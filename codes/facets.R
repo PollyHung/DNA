@@ -1,18 +1,17 @@
-#!/usr/bin/env Rscript
-args <- commandArgs(trailingOnly = TRUE)
-sample <- args[1]
-
 # Load required libraries
 library(dplyr)
 library(magrittr)
 library(facets)
 
 # Define paths (relative to current working directory)
-base_dir <- getwd()
-datafile <- file.path(base_dir, paste0(sample, ".snp-pileup.csv"))
-cncf_csv <- file.path(base_dir, paste0(sample, ".cncf.csv"))
-plot_pdf <- file.path(base_dir, paste0(sample, ".facets_plot.pdf"))
-rdata <- file.path(base_dir, paste0(sample, ".RData"))
+samples <- c("Kura_A15_DNA", "Kura_A2_DNA", "Kura_GFP_DNA", 
+             "OAW28_A14_DNA", "OAW28_A16_DNA", "OAW28_GFP_DNA")
+
+base_dir <- "~/Desktop/WES/pileup/"
+datafile <- file.path(base_dir, paste0(samples, ".snp-pileup.csv.gz"))
+cncf_csv <- file.path(base_dir, paste0(samples, ".cncf.csv"))
+plot_pdf <- file.path(base_dir, paste0(samples, ".facets_plot.pdf"))
+rdata <- file.path(base_dir, paste0(samples, ".RData"))
 
 # Read and process pileup data
 pileup <- read.csv(gzfile(datafile), 

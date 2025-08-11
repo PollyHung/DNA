@@ -1,6 +1,6 @@
 ## If prepare.sh is executed, then previous directory is inherited here. 
 ## But in case you skipped prepare.sh, we'll set directory here again, just in case :D
-folder="$HOME/$sample_id"
+folder="$DATA/$sample_id"
 cd $folder 
 
 ## Load all Modules needed
@@ -10,13 +10,16 @@ source activate /software/GenomeAnalysisTK/4.2.0.0
 module load ANNOVAR/2020Jun08
 
 # get unfiltered vcf 
+## Added the last two lines for PureCN
 gatk Mutect2 \
   -R "$HG38" \
   -I "${sample_id}.sort.tag.dedup.cal.bam" \
   -I "$PAIRED_NORMAL" \
   --panel-of-normals "$PON" \
   -germline-resource "$GNOMAD" \
-  -O "${sample_id}.vcf.gz"
+  -O "${sample_id}.vcf.gz" \
+  --genotype-germline-sites true \
+  --genotype-pon-sites true
   
 # get pile up summaries for tumour 
 gatk GetPileupSummaries \

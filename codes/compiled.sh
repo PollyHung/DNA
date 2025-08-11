@@ -1,15 +1,21 @@
 #!/bin/bash
 #PBS -l nodes=1:ppn=12
-#PBS -l mem=50g
+#PBS -l mem=120g
 #PBS -l walltime=24:00:00
 #PBS -m a
-#PBS -q medium
-#PBS -N OAW28
+#PBS -q large
+#PBS -N compress
+
+## Global Calling 
+module load miniconda3/24.1.2
+
 
 ## Set Working Directory 
 ORIG="/home/polly_hung"
-HOME="/home/polly_hung/WES/F25A430000757_HOMukwhX"
-SAMPLES="$HOME/mutect_oaw28.txt" 
+DATA="/home/polly_hung/WES/F25A430000757_HOMukwhX"
+SAMPLES="$DATA/mutect_oaw28.txt" 
+
+cores=$(nproc)
 
 ## Hard Coded Parameters 
 RGLB="Whole Exome library"                                                      ## [alignment.sh]
@@ -27,8 +33,13 @@ SORTED_VCF="$REF/vcf/sorted_vcf_file.vcf.gz"
 GNOMAD="$REF/vcf/af-only-gnomad.hg38.vcf.gz"
 INTERVAL="$REF/interval/hg38_wes_gatk_stripped.interval_list"
 PON="$REF/vcf/somatic-hg38_1000g_pon.hg38.vcf.gz"
+PON_DB="$REF/gatk_pondb"
 ANNOVARDB="$REF/humandb/"
 CONFIG="$REF/TMB/config"
+BAIT="$REF/interval/SureSelectV6r2/S07604514_Covered_Clean_Ensembl.bed"
+PURECNOUT="$REF/purecn"
+MAPPABILITY="$REF/bigwig/GCA_000001405.15_GRCh38_no_alt_analysis_set_100.bw"
+REPEAT="$REF/bed/hg38.repeats.ensembl.sorted.bed"
 
 ## Sub-scripts 
 CODE="/home/polly_hung/WES/codes"
@@ -65,5 +76,4 @@ while IFS= read -r sample_id; do
 
     
 done < "$SAMPLES" 
-
 

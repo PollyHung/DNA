@@ -1,5 +1,5 @@
 ## Give the folder address 
-folder="$HOME/$sample_id"
+folder="$DATA/$sample_id"
 
 ## If folder not found, create folder 
 if [ ! -d "$folder" ]; then
@@ -15,10 +15,10 @@ Preparing Analysis for sample $sample_id at $(date)
 
 ## If fastq files exist at the same level as the folder just created, 
 ## move all files with same sample prefix to the corresponding folder. 
-if find "$HOME" -maxdepth 1 -name "$sample_id*" -type f | grep -q .; then
+if find "$DATA" -maxdepth 1 -name "$sample_id*" -type f | grep -q .; then
   echo "Sample folder not found, created sample folder. 
         Move corresponding raw fastq/fq files to sub-directory" >> "$folder/$sample_id.notes.txt"
-  find "$HOME" -maxdepth 1 -name "$sample_id*" -type f -exec mv -v {} "$folder"/ \;
+  find "$DATA" -maxdepth 1 -name "$sample_id*" -type f -exec mv -v {} "$folder"/ \;
 fi
 
 ## change directory to corresponding sample 
